@@ -63,10 +63,13 @@ public class AuthThread extends Thread {
 				Log.e("error", "Error when communicating with the server", e);
 			} catch (ConnectTimeoutException e) {
 				sendError(AuthHandler.ERROR_TIMEOUT);
+				Log.e("error", "The connexion timed-out", e);
 			} catch (JSONException e) {
 				sendError(AuthHandler.ERROR_JSON);
+				Log.e("error", "Error when analyzing the JSON", e);
 			} catch (Exception e) {
 				sendError(AuthHandler.ERROR_UNKNOWN);
+				Log.e("error", "An unknown error has occured", e);
 			}
 		}
 	}
