@@ -25,7 +25,7 @@ public class AuthActivity extends Activity implements OnClickListener, OnCancelL
 		
 		progress = new ProgressDialog(this);
 		alert = new AlertDialog.Builder(this).create();
-		AuthHandler handler = new AuthHandler(progress, alert, androidId);
+		AuthHandler handler = new AuthHandler(progress, alert, this, androidId);
 		thread = new AuthThread(handler, androidId);
 		
 		progress.setOnCancelListener(this);

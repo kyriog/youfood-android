@@ -1,44 +1,45 @@
 package com.supinfo.youfood.handler;
 
-import com.supinfo.youfood.activity.MenuActivity;
+import java.util.ArrayList;
 
-import android.app.Activity;
+import com.supinfo.youfood.activity.MenuActivity;
+import com.supinfo.youfood.model.Category;
+
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Message;
 
-public class AuthHandler extends BaseHandler {
+public class MenuHandler extends BaseHandler {
 	private ProgressDialog progress;
 	private AlertDialog alert;
-	private Activity activity;
-	private String androidId;
+	private MenuActivity activity;
 	
-	public AuthHandler(ProgressDialog p, AlertDialog ad, Activity a, String aI) {
+	public MenuHandler(ProgressDialog p, AlertDialog a, MenuActivity ma) {
 		progress = p;
-		alert = ad;
-		activity = a;
-		androidId = aI;
+		alert = a;
+		activity = ma;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void handleMessage(Message msg) {
 		super.handleMessage(msg);
 		switch(msg.arg1) {
 		case STATUS_START:
-			progress.setTitle("Vérification…");
-			progress.setMessage("Vérification du statut de la tablette.\nMerci de bien vouloir patienter…");
+			progress.setTitle("Chargement du menu…");
+			progress.setMessage("Le menu est en cours de chargement.\nMerci de bien vouloir patienter…");
 			progress.show();
 			break;
 		case STATUS_NOK:
-			progress.setTitle("En attente d'acceptation…");
-			progress.setMessage("Cette tablette n'est pas encore acceptée pour accéder au menu.\nMerci de vous rendre dans l'administration et d'accepter cette tablette.\nIdentifiant de la tablette : "+androidId);
+			progress.dismiss();
+			alert.setTitle("Hmm c'est embêtant…");
+			alert.setMessage("Il semblerait que la tablette ne soit plus autorisée à accéder au menu.\nLa procédure d'enregistrement va redémarrer");
+			alert.show();
 			break;
 		case STATUS_OK:
 			progress.dismiss();
-			Intent intent = new Intent(activity, MenuActivity.class);
-			activity.startActivity(intent);
-			activity.finish();
+			activity.setMenu((ArrayList<Category>) msg.obj);
+			activity.displayMenu();
 			break;
 		case STATUS_ERROR:
 			progress.dismiss();
