@@ -1,8 +1,14 @@
 package com.supinfo.youfood.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Category {
+public class Category implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 106010792290687806L;
+	
 	private int id;
 	private String name;
 	private ArrayList<Product> products = new ArrayList<Product>();

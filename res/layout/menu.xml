@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:baselineAligned="false"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
+
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="20"
+        android:orientation="vertical">
+        <TabHost 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/tabhost">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+				<TabWidget 
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:id="@android:id/tabs"></TabWidget> 
+			        <FrameLayout
+			            android:layout_width="match_parent"
+			            android:layout_height="match_parent"
+			            android:id="@android:id/tabcontent"></FrameLayout>    
+            </LinearLayout>
+		    
+        </TabHost>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="80"
+        android:orientation="vertical">
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            
+            <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ma commande" />
+
+        </LinearLayout>
+
+         <LinearLayout 
+             android:layout_height="wrap_content"
+             android:layout_width="match_parent"
+             android:orientation="vertical"
+             android:layout_weight="0">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Passer ma commande" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="J&apos;ai besoin d&apos;aide !" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -6,7 +6,7 @@ import com.supinfo.youfood.handler.MenuHandler;
 import com.supinfo.youfood.model.Category;
 import com.supinfo.youfood.thread.MenuThread;
 
-import android.app.Activity;
+import android.app.ActivityGroup;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -14,8 +14,10 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.widget.TabHost;
 
-public class MenuActivity extends Activity implements OnClickListener {
+@SuppressWarnings("deprecation")
+public class MenuActivity extends ActivityGroup implements OnClickListener {
 	private ArrayList<Category> menu;
 
 	@Override
@@ -49,6 +51,14 @@ public class MenuActivity extends Activity implements OnClickListener {
 	}
 	
 	public void displayMenu() {
-		
+		setContentView(R.layout.menu);
+        TabHost mTabHost = (TabHost) findViewById(R.id.tabhost);
+        mTabHost.setup(getLocalActivityManager());
+        
+        for(Category category : menu) {
+        	Intent i = new Intent(this, CategoryActivity.class);
+        	i.putExtra("category", category);
+            mTabHost.addTab(mTabHost.newTabSpec("category_"+category.getId()).setIndicator(category.getName()).setContent(i));
+        }
 	}
 }
