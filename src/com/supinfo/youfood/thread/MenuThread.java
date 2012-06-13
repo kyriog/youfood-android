@@ -25,17 +25,12 @@ import com.supinfo.youfood.model.Product;
 import com.supinfo.youfood.preferences.YoufoodPreferences;
 
 public class MenuThread extends Thread {
-	private boolean running = true;
 	private MenuHandler handler;
 	private String androidId;
 	
 	public MenuThread(MenuHandler h, String aI) {
 		handler = h;
 		androidId = aI;
-	}
-	
-	protected void requestStop() {
-		running = false;
 	}
 
 	@Override
@@ -47,32 +42,29 @@ public class MenuThread extends Thread {
 		
 		String json;
 		String result;
-		while(running) {
-			try {
-				json = sendRequest();
-				result = parseStatus(json);
-				msg = handler.obtainMessage();
-				if("ok".equals(result)) {
-					msg.arg1 = MenuHandler.STATUS_OK;
-					msg.obj = parseProducts(json);
-				} else {
-					msg.arg1 = MenuHandler.STATUS_NOK;
-				}
-				handler.sendMessage(msg);
-				requestStop();
-			} catch (HttpHostConnectException e) {
-				sendError(MenuHandler.ERROR_HTTP);
-				Log.e("error", "Error when communicating with the server", e);
-			} catch (ConnectTimeoutException e) {
-				sendError(MenuHandler.ERROR_TIMEOUT);
-				Log.e("error", "The connexion timed-out", e);
-			} catch (JSONException e) {
-				sendError(MenuHandler.ERROR_JSON);
-				Log.e("error", "Error when analyzing the JSON", e);
-			} catch (Exception e) {
-				sendError(MenuHandler.ERROR_UNKNOWN);
-				Log.e("error", "An unknown error has occured", e);
+		try {
+			json = sendRequest();
+			result = parseStatus(json);
+			msg = handler.obtainMessage();
+			if("ok".equals(result)) {
+				msg.arg1 = MenuHandler.STATUS_OK;
+				msg.obj = parseProducts(json);
+			} else {
+				msg.arg1 = MenuHandler.STATUS_NOK;
 			}
+			handler.sendMessage(msg);
+		} catch (HttpHostConnectException e) {
+			sendError(MenuHandler.ERROR_HTTP);
+			Log.e("error", "Error when communicating with the server", e);
+		} catch (ConnectTimeoutException e) {
+			sendError(MenuHandler.ERROR_TIMEOUT);
+			Log.e("error", "The connexion timed-out", e);
+		} catch (JSONException e) {
+			sendError(MenuHandler.ERROR_JSON);
+			Log.e("error", "Error when analyzing the JSON", e);
+		} catch (Exception e) {
+			sendError(MenuHandler.ERROR_UNKNOWN);
+			Log.e("error", "An unknown error has occured", e);
 		}
 	}
 	
@@ -126,6 +118,5 @@ public class MenuThread extends Thread {
 		msg.arg1 = MenuHandler.STATUS_ERROR;
 		msg.arg2 = errorCode;
 		handler.sendMessage(msg);
-		requestStop();
 	}
 }
