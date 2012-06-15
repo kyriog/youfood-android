@@ -2,6 +2,7 @@ package com.supinfo.youfood.adapter;
 
 import java.util.ArrayList;
 
+import com.supinfo.youfood.listener.AddToCartListener;
 import com.supinfo.youfood.model.Product;
 
 import android.content.Context;
@@ -43,7 +44,9 @@ public class CategoryAdapter extends BaseAdapter {
 		TextView name = new TextView(context);
 		TextView description = new TextView(context);
 		
+		AddToCartListener listener = new AddToCartListener(product);
 		checkout.setText("Commander");
+		checkout.setOnClickListener(listener);
 		
 		name.setTextSize(25);
 		name.setText(product.getName() + " – " + product.getPrice() + " €");

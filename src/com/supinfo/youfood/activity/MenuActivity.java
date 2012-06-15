@@ -2,7 +2,9 @@ package com.supinfo.youfood.activity;
 
 import java.util.ArrayList;
 
+import com.supinfo.youfood.adapter.RightCartAdapter;
 import com.supinfo.youfood.handler.MenuHandler;
+import com.supinfo.youfood.listener.AddToCartListener;
 import com.supinfo.youfood.model.Category;
 import com.supinfo.youfood.thread.MenuThread;
 
@@ -14,6 +16,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.widget.ListView;
 import android.widget.TabHost;
 
 @SuppressWarnings("deprecation")
@@ -54,6 +57,11 @@ public class MenuActivity extends ActivityGroup implements OnClickListener {
 		setContentView(R.layout.menu);
         TabHost mTabHost = (TabHost) findViewById(R.id.tabhost);
         mTabHost.setup(getLocalActivityManager());
+        
+        RightCartAdapter cartAdapter = new RightCartAdapter(this);
+		ListView cart = (ListView) findViewById(R.id.cart_right);
+		cart.setAdapter(cartAdapter);
+		AddToCartListener.setCartAdapter(cartAdapter);
         
         for(Category category : menu) {
         	Intent i = new Intent(this, CategoryActivity.class);
