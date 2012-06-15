@@ -2,10 +2,14 @@ package com.supinfo.youfood.adapter;
 
 import java.util.ArrayList;
 
+import com.supinfo.youfood.listener.ChangeQuantityListener;
+import com.supinfo.youfood.listener.ConfirmDeleteListener;
 import com.supinfo.youfood.model.CartProduct;
 import com.supinfo.youfood.model.Product;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,10 +43,6 @@ public class RightCartAdapter extends BaseAdapter {
 
 	public View getView(int location, View convertView, ViewGroup parent) {
 		CartProduct cartProduct = getItem(location);
-		if(cartProduct.getQuantity() == 0) {
-			cartProducts.remove(cartProduct);
-			notifyDataSetChanged();
-		}
 		
 		LinearLayout view = new LinearLayout(context);
 		
@@ -55,8 +55,12 @@ public class RightCartAdapter extends BaseAdapter {
 		Button removeQuantity = new Button(context);
 		Button addQuantity = new Button(context);
 		
+		ChangeQuantityListener listener = new ChangeQuantityListener(ChangeQuantityListener.TYPE_REMOVE, cartProduct, this);
 		removeQuantity.setText("-");
+		removeQuantity.setOnClickListener(listener);
+		listener = new ChangeQuantityListener(ChangeQuantityListener.TYPE_ADD, cartProduct, this);
 		addQuantity.setText("+");
+		addQuantity.setOnClickListener(listener);
 		buttonsLayout.setOrientation(LinearLayout.HORIZONTAL);
 		buttonsLayout.setGravity(Gravity.RIGHT);
 		buttonsLayout.addView(removeQuantity);
@@ -86,6 +90,27 @@ public class RightCartAdapter extends BaseAdapter {
 	
 	public void addProductToCart(Product product) {
 		cartProducts.add(new CartProduct(product));
+		notifyDataSetChanged();
+	}
+	
+	public void verifyQuantityFor(CartProduct cartProduct) {
+		if(cartProduct.getQuantity() == 0) {
+			ConfirmDeleteListener.setAdapter(this);
+			ConfirmDeleteListener listener = new ConfirmDeleteListener(cartProduct);
+			
+			AlertDialog confirm = new AlertDialog.Builder(context).create();
+			confirm.setTitle("Êtes-vous sûr ?");
+			confirm.setMessage("Voulez-vous vraiment supprimer " + cartProduct.getProduct().getName() + " de votre panier ?");
+			confirm.setButton(DialogInterface.BUTTON_POSITIVE, "Oui, je veux supprimer ce produit", listener);
+			confirm.setButton(DialogInterface.BUTTON_NEGATIVE, "Non, garder ce produit dans mon panier", listener);
+			confirm.setOnCancelListener(listener);
+			
+			confirm.show();
+		}
+	}
+	
+	public void removeFromCart(CartProduct cartProduct) {
+		cartProducts.remove(cartProduct);
 		notifyDataSetChanged();
 	}
 }
