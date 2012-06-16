@@ -3,31 +3,35 @@ package com.supinfo.youfood.activity;
 import java.util.ArrayList;
 
 import com.supinfo.youfood.adapter.RightCartAdapter;
+import com.supinfo.youfood.handler.HelpHandler;
 import com.supinfo.youfood.handler.MenuHandler;
 import com.supinfo.youfood.listener.AddToCartListener;
 import com.supinfo.youfood.model.Category;
+import com.supinfo.youfood.thread.HelpThread;
 import com.supinfo.youfood.thread.MenuThread;
 
 import android.app.ActivityGroup;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TabHost;
 
 @SuppressWarnings("deprecation")
-public class MenuActivity extends ActivityGroup implements OnClickListener {
+public class MenuActivity extends ActivityGroup implements DialogInterface.OnClickListener, View.OnClickListener {
 	private ArrayList<Category> menu;
+	private String androidId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		String androidId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+		androidId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 		
 		ProgressDialog progress = new ProgressDialog(this);
 		AlertDialog alert = new AlertDialog.Builder(this).create();
@@ -46,7 +50,23 @@ public class MenuActivity extends ActivityGroup implements OnClickListener {
 			startActivity(intent);
 			finish();
 			break;
+		case DialogInterface.BUTTON_POSITIVE:
+			dialog.dismiss();
+			break;
 		}
+	}
+	
+	public void onClick(View arg0) {
+		ProgressDialog progress = new ProgressDialog(this);
+		AlertDialog alert = new AlertDialog.Builder(this).create();
+		HelpHandler handler = new HelpHandler(progress, alert);
+		HelpThread thread = new HelpThread(handler, androidId);
+		
+		progress.setCancelable(false);
+		
+		alert.setButton(DialogInterface.BUTTON_POSITIVE, "OK", this);
+		
+		thread.start();
 	}
 	
 	public void setMenu(ArrayList<Category> m) {
@@ -68,5 +88,8 @@ public class MenuActivity extends ActivityGroup implements OnClickListener {
         	i.putExtra("category", category);
             mTabHost.addTab(mTabHost.newTabSpec("category_"+category.getId()).setIndicator(category.getName()).setContent(i));
         }
+        
+        Button needHelp = (Button) findViewById(R.id.need_help);
+        needHelp.setOnClickListener(this);
 	}
 }

@@ -68,7 +68,8 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="J&apos;ai besoin d&apos;aide !" />
+            android:text="J&apos;ai besoin d&apos;aide !"
+            android:id="@+id/need_help" />
         </LinearLayout>
     </LinearLayout>
 
