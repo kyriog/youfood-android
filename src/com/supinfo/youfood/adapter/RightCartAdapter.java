@@ -24,9 +24,18 @@ public class RightCartAdapter extends BaseAdapter {
 	private ArrayList<CartProduct> cartProducts = new ArrayList<CartProduct>();
 	
 	private Context context;
+	private Button checkoutButton;
 	
-	public RightCartAdapter(Context c) {
+	public RightCartAdapter(Context c, Button cB) {
 		context = c;
+		checkoutButton = cB;
+		setCheckoutButtonStatus();
+	}
+
+	@Override
+	public void notifyDataSetChanged() {
+		super.notifyDataSetChanged();
+		setCheckoutButtonStatus();
 	}
 
 	public int getCount() {
@@ -128,5 +137,9 @@ public class RightCartAdapter extends BaseAdapter {
 			price += cartProduct.getQuantity() * cartProduct.getProduct().getPrice();
 		}
 		return price;
+	}
+	
+	private void setCheckoutButtonStatus() {
+		checkoutButton.setEnabled(getCount() > 0);
 	}
 }

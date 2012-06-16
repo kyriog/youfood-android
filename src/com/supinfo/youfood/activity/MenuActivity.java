@@ -118,7 +118,12 @@ public class MenuActivity extends ActivityGroup implements DialogInterface.OnCli
         TabHost mTabHost = (TabHost) findViewById(R.id.tabhost);
         mTabHost.setup(getLocalActivityManager());
         
-        cartAdapter = new RightCartAdapter(this);
+        Button needHelp = (Button) findViewById(R.id.need_help);
+        needHelp.setOnClickListener(this);
+        Button goCheckout = (Button) findViewById(R.id.go_checkout);
+        goCheckout.setOnClickListener(this);
+        
+        cartAdapter = new RightCartAdapter(this, goCheckout);
 		ListView cart = (ListView) findViewById(R.id.cart_right);
 		cart.setAdapter(cartAdapter);
 		AddToCartListener.setCartAdapter(cartAdapter);
@@ -128,10 +133,5 @@ public class MenuActivity extends ActivityGroup implements DialogInterface.OnCli
         	i.putExtra("category", category);
             mTabHost.addTab(mTabHost.newTabSpec("category_"+category.getId()).setIndicator(category.getName()).setContent(i));
         }
-        
-        Button needHelp = (Button) findViewById(R.id.need_help);
-        needHelp.setOnClickListener(this);
-        Button goCheckout = (Button) findViewById(R.id.go_checkout);
-        goCheckout.setOnClickListener(this);
 	}
 }
