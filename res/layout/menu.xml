@@ -63,7 +63,8 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Passer ma commande" />
+            android:text="Passer ma commande"
+            android:id="@+id/go_checkout" />
 
         <Button
             android:layout_width="match_parent"

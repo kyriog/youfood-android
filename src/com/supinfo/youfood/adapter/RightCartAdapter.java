@@ -113,4 +113,20 @@ public class RightCartAdapter extends BaseAdapter {
 		cartProducts.remove(cartProduct);
 		notifyDataSetChanged();
 	}
+	
+	public int getGlobalQuantity() {
+		int quantity = 0;
+		for(CartProduct cartProduct : cartProducts) {
+			quantity += cartProduct.getQuantity();
+		}
+		return quantity;
+	}
+	
+	public float getGlobalPrice() {
+		float price = 0;
+		for(CartProduct cartProduct : cartProducts) {
+			price += cartProduct.getQuantity() * cartProduct.getProduct().getPrice();
+		}
+		return price;
+	}
 }
