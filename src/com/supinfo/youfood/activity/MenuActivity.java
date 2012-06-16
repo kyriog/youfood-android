@@ -9,7 +9,6 @@ import com.supinfo.youfood.handler.HelpHandler;
 import com.supinfo.youfood.handler.MenuHandler;
 import com.supinfo.youfood.listener.AddToCartListener;
 import com.supinfo.youfood.model.Category;
-import com.supinfo.youfood.preferences.YoufoodPreferences;
 import com.supinfo.youfood.thread.HelpThread;
 import com.supinfo.youfood.thread.MenuThread;
 
@@ -33,6 +32,8 @@ import android.widget.TextView;
 public class MenuActivity extends ActivityGroup implements DialogInterface.OnClickListener, View.OnClickListener {
 	private static final int PAYPAL_CHECKOUT_BUTTON_ID = 1456545584; // Random number!
 	
+	private PayPal paypal;
+	
 	private ArrayList<Category> menu;
 	private String androidId;
 	private RightCartAdapter cartAdapter;
@@ -46,7 +47,7 @@ public class MenuActivity extends ActivityGroup implements DialogInterface.OnCli
 		ProgressDialog progress = new ProgressDialog(this);
 		AlertDialog alert = new AlertDialog.Builder(this).create();
 		MenuHandler handler = new MenuHandler(progress, alert, this);
-		MenuThread thread = new MenuThread(handler, androidId);
+		MenuThread thread = new MenuThread(handler, androidId, this);
 		
 		alert.setButton(DialogInterface.BUTTON_NEUTRAL, "OK", this);
 		
@@ -81,7 +82,6 @@ public class MenuActivity extends ActivityGroup implements DialogInterface.OnCli
 			thread.start();
 			break;
 		case R.id.go_checkout:
-			PayPal paypal = PayPal.initWithAppID(this, YoufoodPreferences.PAYPAL_APP_ID, YoufoodPreferences.PAYPAL_ENV);
 			CheckoutButton checkoutButton = paypal.getCheckoutButton(this, PayPal.BUTTON_278x43, CheckoutButton.TEXT_PAY);
 			checkoutButton.setId(PAYPAL_CHECKOUT_BUTTON_ID);
 			checkoutButton.setOnClickListener(this);
@@ -107,6 +107,10 @@ public class MenuActivity extends ActivityGroup implements DialogInterface.OnCli
 			paymentDialog.create().show();
 			break;
 		}
+	}
+	
+	public void setPayPalObject(PayPal p) {
+		paypal = p;
 	}
 	
 	public void setMenu(ArrayList<Category> m) {

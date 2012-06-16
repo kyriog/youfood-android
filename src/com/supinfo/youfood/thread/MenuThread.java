@@ -19,6 +19,8 @@ import org.json.JSONObject;
 import android.os.Message;
 import android.util.Log;
 
+import com.paypal.android.MEP.PayPal;
+import com.supinfo.youfood.activity.MenuActivity;
 import com.supinfo.youfood.handler.MenuHandler;
 import com.supinfo.youfood.model.Category;
 import com.supinfo.youfood.model.Product;
@@ -27,10 +29,12 @@ import com.supinfo.youfood.preferences.YoufoodPreferences;
 public class MenuThread extends Thread {
 	private MenuHandler handler;
 	private String androidId;
+	private MenuActivity activity;
 	
-	public MenuThread(MenuHandler h, String aI) {
+	public MenuThread(MenuHandler h, String aI, MenuActivity a) {
 		handler = h;
 		androidId = aI;
+		activity = a;
 	}
 
 	@Override
@@ -39,6 +43,8 @@ public class MenuThread extends Thread {
 		msg = handler.obtainMessage();
 		msg.arg1 = MenuHandler.STATUS_START;
 		handler.sendMessage(msg);
+		
+		activity.setPayPalObject(PayPal.initWithAppID(activity, YoufoodPreferences.PAYPAL_APP_ID, YoufoodPreferences.PAYPAL_ENV));
 		
 		String json;
 		String result;
