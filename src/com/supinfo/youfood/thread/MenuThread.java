@@ -16,7 +16,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.graphics.BitmapFactory;
 import android.os.Message;
+import android.util.Base64;
 import android.util.Log;
 
 import com.paypal.android.MEP.PayPal;
@@ -111,6 +113,8 @@ public class MenuThread extends Thread {
 				product.setId(jsonProduct.getInt("id"));
 				product.setName(jsonProduct.getString("name"));
 				product.setDescription(jsonProduct.getString("description"));
+				byte[] decodedImage = Base64.decode(jsonProduct.getString("image"), Base64.DEFAULT);
+				product.setImage(BitmapFactory.decodeByteArray(decodedImage, 0, decodedImage.length));
 				product.setPrice(jsonProduct.getDouble("price"));
 				category.addProduct(product);
 			}

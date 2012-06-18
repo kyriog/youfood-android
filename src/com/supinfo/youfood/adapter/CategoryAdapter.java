@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class CategoryAdapter extends BaseAdapter {
@@ -40,26 +42,41 @@ public class CategoryAdapter extends BaseAdapter {
 		
 		LinearLayout view = new LinearLayout(context);
 		LinearLayout itemLayout = new LinearLayout(context);
+		RelativeLayout checkoutLayout = new RelativeLayout(context);
+		ImageView image = new ImageView(context);
 		Button checkout = new Button(context);
 		TextView name = new TextView(context);
 		TextView description = new TextView(context);
 		
+		image.setImageBitmap(product.getImage());
+		image.setAdjustViewBounds(true);
+		image.setMaxHeight(100);
+		image.setMaxWidth(100);
+		image.setPadding(0, 0, 5, 0);
+		
 		AddToCartListener listener = new AddToCartListener(product);
 		checkout.setText("Commander");
 		checkout.setOnClickListener(listener);
+		checkout.setPadding(30, 20, 30, 20);
+		RelativeLayout.LayoutParams checkoutRules = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		checkoutRules.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+		checkout.setLayoutParams(checkoutRules);
+		checkoutLayout.addView(checkout);
 		
-		name.setTextSize(25);
+		name.setTextSize(30);
 		name.setText(product.getName() + " – " + product.getPrice() + " €");
 		
 		description.setText(product.getDescription());
+		description.setTextSize(20);
 		
 		itemLayout.setOrientation(LinearLayout.VERTICAL);
 		itemLayout.addView(name);
 		itemLayout.addView(description);
 		
 		view.setOrientation(LinearLayout.HORIZONTAL);
+		view.addView(image);
 		view.addView(itemLayout, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1));
-		view.addView(checkout, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT, 0));
+		view.addView(checkoutLayout, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 0));
 		
 		return view;
 	}

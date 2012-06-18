@@ -1,9 +1,12 @@
 package com.supinfo.youfood.model;
 
+import android.graphics.Bitmap;
+
 public class Product {
 	private int id;
 	private String name;
 	private String description;
+	private Bitmap image;
 	private double price;
 	
 	public int getId() {
@@ -23,6 +26,12 @@ public class Product {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public Bitmap getImage() {
+		return image;
+	}
+	public void setImage(Bitmap image) {
+		this.image = image;
 	}
 	public double getPrice() {
 		return price;
