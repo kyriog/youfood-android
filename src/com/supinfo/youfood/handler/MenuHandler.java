@@ -28,6 +28,7 @@ public class MenuHandler extends BaseHandler {
 		case STATUS_START:
 			progress.setTitle("Chargement du menu…");
 			progress.setMessage("Le menu est en cours de chargement.\nMerci de bien vouloir patienter…");
+			progress.setCancelable(false);
 			progress.show();
 			break;
 		case STATUS_NOK:
