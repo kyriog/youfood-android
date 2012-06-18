@@ -1,8 +1,11 @@
 package com.supinfo.youfood.listener;
 
+import com.supinfo.youfood.handler.ZoomHandler;
 import com.supinfo.youfood.model.Product;
+import com.supinfo.youfood.thread.ZoomThread;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,15 +21,13 @@ public class ZoomListener implements OnClickListener {
 	}
 	
 	public void onClick(View arg0) {
+		ProgressDialog progress = new ProgressDialog(context);
+		AlertDialog.Builder alert = new AlertDialog.Builder(context);
 		ImageView image = new ImageView(context);
-		image.setImageBitmap(product.getImage());
 		
-		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		builder.setTitle(product.getName());
-		builder.setView(image);
-		builder.setPositiveButton("Fermer", null);
-		AlertDialog alert = builder.create();
+		ZoomHandler handler = new ZoomHandler(progress, alert, image, product.getName());
+		ZoomThread thread = new ZoomThread(handler, product.getImage());
 		
-		alert.show();
+		thread.start();
 	}
 }
