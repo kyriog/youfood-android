@@ -3,6 +3,7 @@ package com.supinfo.youfood.adapter;
 import java.util.ArrayList;
 
 import com.supinfo.youfood.listener.AddToCartListener;
+import com.supinfo.youfood.listener.ZoomListener;
 import com.supinfo.youfood.model.Product;
 
 import android.content.Context;
@@ -48,11 +49,13 @@ public class CategoryAdapter extends BaseAdapter {
 		TextView name = new TextView(context);
 		TextView description = new TextView(context);
 		
+		ZoomListener zlistener = new ZoomListener(context, product);
 		image.setImageBitmap(product.getImage());
 		image.setAdjustViewBounds(true);
 		image.setMaxHeight(100);
 		image.setMaxWidth(100);
 		image.setPadding(0, 0, 5, 0);
+		image.setOnClickListener(zlistener);
 		
 		AddToCartListener listener = new AddToCartListener(product);
 		checkout.setText("Commander");
