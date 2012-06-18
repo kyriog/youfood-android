@@ -142,4 +142,13 @@ public class RightCartAdapter extends BaseAdapter {
 	private void setCheckoutButtonStatus() {
 		checkoutButton.setEnabled(getCount() > 0);
 	}
+	
+	public ArrayList<CartProduct> getCartProducts() {
+		return cartProducts;
+	}
+	
+	public void clearCart() {
+		cartProducts.clear();
+		notifyDataSetChanged();
+	}
 }

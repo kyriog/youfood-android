@@ -10,4 +10,5 @@ public class YoufoodPreferences {
 	
 	public static final int PAYPAL_ENV = PayPal.ENV_SANDBOX;
 	public static final String PAYPAL_APP_ID = "APP-80W284485P519543T";
+	public static final String PAYPAL_RECIPIENT = "";
 }
