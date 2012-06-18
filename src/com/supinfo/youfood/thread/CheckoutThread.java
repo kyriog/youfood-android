@@ -99,7 +99,7 @@ public class CheckoutThread extends Thread {
 		HttpPost httpPost = new HttpPost();
 		httpPost.setHeader("Accept", "application/json");
 		httpPost.setEntity(new StringEntity(post));
-		URI uri = new URI(YoufoodPreferences.BASE_URL + "/checkout");
+		URI uri = new URI(YoufoodPreferences.API_URL + "/checkout");
 		httpPost.setURI(uri);
 		
 		HttpResponse response = httpClient.execute(httpPost);

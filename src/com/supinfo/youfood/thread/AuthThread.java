@@ -82,7 +82,7 @@ public class AuthThread extends Thread {
 		
 		HttpGet httpGet = new HttpGet();
 		httpGet.setHeader("Accept", "application/json");
-		URI uri = new URI(YoufoodPreferences.BASE_URL + "/auth/" + androidId);
+		URI uri = new URI(YoufoodPreferences.API_URL + "/auth/" + androidId);
 		httpGet.setURI(uri);
 		
 		HttpResponse response = httpClient.execute(httpGet);

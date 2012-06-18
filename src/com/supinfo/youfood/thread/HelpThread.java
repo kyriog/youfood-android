@@ -82,7 +82,7 @@ public class HelpThread extends Thread {
 		
 		HttpGet httpGet = new HttpGet();
 		httpGet.setHeader("Accept", "application/json");
-		URI uri = new URI(YoufoodPreferences.BASE_URL + "/help/request/" + androidId);
+		URI uri = new URI(YoufoodPreferences.API_URL + "/help/request/" + androidId);
 		httpGet.setURI(uri);
 		
 		HttpResponse response = httpClient.execute(httpGet);

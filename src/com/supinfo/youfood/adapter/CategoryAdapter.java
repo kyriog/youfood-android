@@ -50,7 +50,7 @@ public class CategoryAdapter extends BaseAdapter {
 		TextView description = new TextView(context);
 		
 		ZoomListener zlistener = new ZoomListener(context, product);
-		image.setImageBitmap(product.getImage());
+		image.setImageBitmap(product.getThumbnail());
 		image.setAdjustViewBounds(true);
 		image.setMaxHeight(100);
 		image.setMaxWidth(100);

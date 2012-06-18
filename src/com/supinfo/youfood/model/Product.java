@@ -6,7 +6,8 @@ public class Product {
 	private int id;
 	private String name;
 	private String description;
-	private Bitmap image;
+	private Bitmap thumbnail;
+	private String image;
 	private double price;
 	
 	public int getId() {
@@ -27,10 +28,16 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Bitmap getImage() {
+	public Bitmap getThumbnail() {
+		return thumbnail;
+	}
+	public void setThumbnail(Bitmap thumbnail) {
+		this.thumbnail= thumbnail;
+	}
+	public String getImage() {
 		return image;
 	}
-	public void setImage(Bitmap image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 	public double getPrice() {

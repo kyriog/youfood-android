@@ -84,7 +84,7 @@ public class MenuThread extends Thread {
 		
 		HttpGet httpGet = new HttpGet();
 		httpGet.setHeader("Accept", "application/json");
-		URI uri = new URI(YoufoodPreferences.BASE_URL + "/get/" + androidId);
+		URI uri = new URI(YoufoodPreferences.API_URL + "/get/" + androidId);
 		httpGet.setURI(uri);
 		
 		HttpResponse response = httpClient.execute(httpGet);
@@ -113,8 +113,9 @@ public class MenuThread extends Thread {
 				product.setId(jsonProduct.getInt("id"));
 				product.setName(jsonProduct.getString("name"));
 				product.setDescription(jsonProduct.getString("description"));
-				byte[] decodedImage = Base64.decode(jsonProduct.getString("image"), Base64.DEFAULT);
-				product.setImage(BitmapFactory.decodeByteArray(decodedImage, 0, decodedImage.length));
+				byte[] decodedImage = Base64.decode(jsonProduct.getString("thumbnail"), Base64.DEFAULT);
+				product.setThumbnail(BitmapFactory.decodeByteArray(decodedImage, 0, decodedImage.length));
+				product.setImage(jsonProduct.getString("image"));
 				product.setPrice(jsonProduct.getDouble("price"));
 				category.addProduct(product);
 			}

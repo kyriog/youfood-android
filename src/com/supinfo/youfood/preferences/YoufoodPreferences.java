@@ -5,7 +5,8 @@ import com.paypal.android.MEP.PayPal;
 public class YoufoodPreferences {
 	private YoufoodPreferences() {}
 	
-	public static String BASE_URL = "http://192.168.0.13/api.php";
+	public static String BASE_URL = "http://192.168.0.13";
+	public static String API_URL = BASE_URL + "/api.php";
 	public static int WAITING_BETWEEN_REQUESTS = 5000;
 	
 	public static final int PAYPAL_ENV = PayPal.ENV_SANDBOX;
