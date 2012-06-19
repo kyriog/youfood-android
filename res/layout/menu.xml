@@ -59,7 +59,26 @@
              android:layout_width="match_parent"
              android:orientation="vertical"
              android:layout_weight="0">
-
+            
+             <LinearLayout 
+                 android:layout_height="wrap_content"
+                 android:layout_width="match_parent"
+                 android:orientation="horizontal">
+            
+                 <TextView
+	                 android:layout_height="wrap_content" 
+	                 android:layout_width="wrap_content"
+	                 android:text="Total : "
+	                 android:textSize="20dp" />
+                 
+                 <TextView
+	                 android:layout_height="wrap_content" 
+	                 android:layout_width="wrap_content"
+	                 android:id="@+id/cart_total"
+	                 android:textSize="20dp" />
+                 
+             </LinearLayout>
+            
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

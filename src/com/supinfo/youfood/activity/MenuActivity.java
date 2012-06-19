@@ -171,8 +171,9 @@ public class MenuActivity extends ActivityGroup implements DialogInterface.OnCli
         needHelp.setOnClickListener(this);
         Button goCheckout = (Button) findViewById(R.id.go_checkout);
         goCheckout.setOnClickListener(this);
+        TextView total = (TextView) findViewById(R.id.cart_total);
         
-        cartAdapter = new RightCartAdapter(this, goCheckout);
+        cartAdapter = new RightCartAdapter(this, goCheckout, total);
 		ListView cart = (ListView) findViewById(R.id.cart_right);
 		cart.setAdapter(cartAdapter);
 		AddToCartListener.setCartAdapter(cartAdapter);
@@ -182,6 +183,8 @@ public class MenuActivity extends ActivityGroup implements DialogInterface.OnCli
         	i.putExtra("category", category);
             mTabHost.addTab(mTabHost.newTabSpec("category_"+category.getId()).setIndicator(category.getName()).setContent(i));
         }
+        
+        total.setText(cartAdapter.getGlobalPrice() + " €");
 	}
 	
 	public void callHelp() {

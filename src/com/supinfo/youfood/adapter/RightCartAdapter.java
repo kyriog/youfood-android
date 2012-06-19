@@ -25,10 +25,12 @@ public class RightCartAdapter extends BaseAdapter {
 	
 	private Context context;
 	private Button checkoutButton;
+	private TextView total;
 	
-	public RightCartAdapter(Context c, Button cB) {
+	public RightCartAdapter(Context c, Button cB, TextView t) {
 		context = c;
 		checkoutButton = cB;
+		total = t;
 		setCheckoutButtonStatus();
 	}
 
@@ -36,6 +38,7 @@ public class RightCartAdapter extends BaseAdapter {
 	public void notifyDataSetChanged() {
 		super.notifyDataSetChanged();
 		setCheckoutButtonStatus();
+		total.setText(getGlobalPrice() + " €");
 	}
 
 	public int getCount() {
