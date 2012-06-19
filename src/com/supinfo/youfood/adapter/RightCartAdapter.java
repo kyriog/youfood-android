@@ -78,7 +78,7 @@ public class RightCartAdapter extends BaseAdapter {
 		buttonsLayout.addView(removeQuantity);
 		buttonsLayout.addView(addQuantity);
 		
-		name.setText(cartProduct.getProduct().getName());
+		name.setText(cartProduct.getProduct().getName() + " — " + (cartProduct.getProduct().getPrice() * cartProduct.getQuantity()) + " €");
 		itemLayout.setOrientation(LinearLayout.VERTICAL);
 		itemLayout.addView(name);
 		itemLayout.addView(buttonsLayout, new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, Gravity.BOTTOM));
